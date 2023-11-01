@@ -10,6 +10,8 @@ import {
   rupesDiscapacidadSlice,
   rupesConductorDiscapacitadoSlice,
   rupesConductorSlice,
+  rupesDiscapacidadRenovacionesSlice,
+  rupesConductorDiscapacitadoRenovacionesSlice,
 } from './slices'
 
 export const store = configureStore({
@@ -19,7 +21,9 @@ export const store = configureStore({
     users: usersSlice.reducer,
     personas: personasSlice.reducer,
     rupesDiscapacidad: rupesDiscapacidadSlice.reducer,
+    rupesDiscapacidadRenovaciones: rupesDiscapacidadRenovacionesSlice.reducer,
     rupesConductorDiscapacitado: rupesConductorDiscapacitadoSlice.reducer,
+    rupesConductorDiscapacitadoRenovaciones: rupesConductorDiscapacitadoRenovacionesSlice.reducer,
     rupesConductor: rupesConductorSlice.reducer,
     vehiculos: vehiculosSlice.reducer,
     ui: uiSlice.reducer,

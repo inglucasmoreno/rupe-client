@@ -33,6 +33,31 @@ export const usePersonasStore = () => {
     dispatch(onSetActivePersona(persona));
   }
 
+  const getPersonaDNI = async (dni: string) => {
+    
+    dispatch(onStartLoadingModalPersonas());
+
+    try{
+      const { data } = await backendApi.get(`personas/parametro/dni/${dni}`);
+      dispatch(onSetActivePersona(data.persona));
+    }catch(error){
+      // Persona activa -> Vacia
+      dispatch(onSetActivePersona({      
+        id: 0,
+        apellido: '',
+        nombre: '',
+        dni: '',
+        telefono: '',
+        sexo: 'Masculino',
+        discapacidad: false,
+        activo: true
+      }));
+      // Se abre el modal -> Nueva persona
+      dispatch(onTogglePersonas());
+    }
+
+  }
+
   const getAllPersonas = async () => {
 
     dispatch(onStartLoadingPersonas());
@@ -111,6 +136,7 @@ export const usePersonasStore = () => {
     activePersona,
 
     // Methods
+    getPersonaDNI,
     getAllPersonas,
     addNewPersona,
     updatePersona,

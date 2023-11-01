@@ -10,6 +10,7 @@ import {
   onToggleRupesConductor,
   onActiveInactiveRupeConductor,
   onUpdateRupeConductor,
+  onDeleteRupeConductor,
   onOpenLoading,
   onCloseLoading,
 } from "../store/slices";
@@ -33,12 +34,13 @@ export const useRupesConductorStore = () => {
     dispatch(onSetActiveRupeConductor(rupeConductor));
   }
 
-  const getAllRupesConductor = async () => {
+  const getAllRupesConductor = async (rupe: string = '') => {
 
     dispatch(onStartLoadingRupesConductor());
 
     try {
-      const { data } = await backendApi.get('rupe-conductores');
+      const { data } = await backendApi.get(`rupe-conductores?rupe=${rupe}`);
+      console.log(data.conductores);
       dispatch(onGetAllRupesConductor(data.conductores));
     } catch (error) {
       const errorMessage = error.response.data.message;
@@ -82,6 +84,22 @@ export const useRupesConductorStore = () => {
 
   }
 
+  const deleteRupeConductor = async (idConductor: number) => {
+    
+    dispatch(onStartLoadingModalRupesConductor());
+    
+    try{
+      const { data } = await backendApi.delete(`rupe-conductores/${idConductor}`);
+      dispatch(onDeleteRupeConductor(data.conductor));
+      notistack.success('Conductor eliminado correctamente');
+    }catch(error){
+      const errorMessage = error.response.data.message;
+      notistack.error(errorMessage);
+      dispatch(onErrorRupeConductor(errorMessage));
+    }
+
+  }
+
   const activeInactiveRupeConductor = async (rupeConductorData: any) => {
 
     dispatch(onOpenLoading(rupeConductorData.activo ? 'Alta de conductor' : 'Baja de conductor'));
@@ -114,6 +132,7 @@ export const useRupesConductorStore = () => {
     getAllRupesConductor,
     addNewRupeConductor,
     updateRupeConductor,
+    deleteRupeConductor,
     setActiveRupeConductor,
     activeInactiveRupeConductor,
 

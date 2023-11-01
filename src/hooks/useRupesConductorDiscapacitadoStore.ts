@@ -15,10 +15,12 @@ import {
 } from "../store/slices";
 import { backendApi } from "../api";
 import { notistack } from "../helpers";
+import { useNavigate } from "react-router-dom";
 
 export const useRupesConductorDiscapacitadoStore = () => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { 
       success, 
@@ -31,6 +33,21 @@ export const useRupesConductorDiscapacitadoStore = () => {
 
   const setActiveRupeConductorDiscapacitado = (rupeConductorDiscapacitado) => {
     dispatch(onSetActiveRupeConductorDiscapacitado(rupeConductorDiscapacitado));
+  }
+
+  const getIdRupeConductorDiscapacitado = async (id) => {
+    
+    dispatch(onStartLoadingRupesConductorDiscapacitado());
+
+    try {
+      const { data } = await backendApi.get(`rupe-conductor-discapacitado/${id}`);
+      dispatch(onSetActiveRupeConductorDiscapacitado(data.rupe));
+    } catch (error) {
+      const errorMessage = error.response.data.message;
+      notistack.error(errorMessage);
+      dispatch(onErrorRupeConductorDiscapacitado(errorMessage));
+    }
+
   }
 
   const getAllRupesConductorDiscapacitado = async () => {
@@ -57,6 +74,7 @@ export const useRupesConductorDiscapacitadoStore = () => {
       dispatch(onAddNewRupeConductorDiscapacitado(data.rupe));
       notistack.success('RUPE conductor discapacitado creado correctamente');
       dispatch(onToggleRupesConductorDiscapacitado());
+      navigate(`/rupes-conductor-discapacitado/detalles/${data.rupe.id}`);
     } catch (error) {
       const errorMessage = error.response.data.message;
       notistack.error(errorMessage);
@@ -112,6 +130,7 @@ export const useRupesConductorDiscapacitadoStore = () => {
 
     // Methods
     getAllRupesConductorDiscapacitado,
+    getIdRupeConductorDiscapacitado,
     addNewRupeConductorDiscapacitado,
     updateRupeConductorDiscapacitado,
     setActiveRupeConductorDiscapacitado,

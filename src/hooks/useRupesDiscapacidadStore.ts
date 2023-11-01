@@ -15,9 +15,11 @@ import {
 } from "../store/slices";
 import { backendApi } from "../api";
 import { notistack } from "../helpers";
+import { useNavigate } from "react-router-dom";
 
 export const useRupesDiscapacidadStore = () => {
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { 
@@ -31,6 +33,21 @@ export const useRupesDiscapacidadStore = () => {
 
   const setActiveRupeDiscapacidad = (rupeDiscapacidad) => {
     dispatch(onSetActiveRupeDiscapacidad(rupeDiscapacidad));
+  }
+
+  const getIdRupeDiscapacidad = async (id) => {
+    
+    dispatch(onStartLoadingRupesDiscapacidad());
+
+    try {
+      const { data } = await backendApi.get(`rupe-discapacidad/${id}`);
+      dispatch(onSetActiveRupeDiscapacidad(data.rupe));
+    } catch (error) {
+      const errorMessage = error.response.data.message;
+      notistack.error(errorMessage);
+      dispatch(onErrorRupeDiscapacidad(errorMessage));
+    }
+
   }
 
   const getAllRupesDiscapacidad = async () => {
@@ -55,8 +72,9 @@ export const useRupesDiscapacidadStore = () => {
     try {
       const { data } = await backendApi.post('rupe-discapacidad', rupeDiscapacidadData);
       dispatch(onAddNewRupeDiscapacidad(data.rupe));
-      notistack.success('RUPE creado correctamente');
       dispatch(onToggleRupesDiscapacidad());
+      notistack.success('RUPE creado correctamente');
+      navigate(`/rupes-discapacidad/detalles/${data.rupe.id}`);
     } catch (error) {
       const errorMessage = error.response.data.message;
       notistack.error(errorMessage);
@@ -111,6 +129,7 @@ export const useRupesDiscapacidadStore = () => {
     activeRupeDiscapacidad,
 
     // Methods
+    getIdRupeDiscapacidad,
     getAllRupesDiscapacidad,
     addNewRupeDiscapacidad,
     updateRupeDiscapacidad,

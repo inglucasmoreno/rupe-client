@@ -9,3 +9,5 @@ export * from './vehiculosSlice';
 export * from './rupesDiscapacidadSlice';
 export * from './rupesConductorDiscapacitadoSlice';
 export * from './rupesConductorSlice';
+export * from './rupesDiscapacidadRenovacionesSlice';
+export * from './rupesConductorDiscapacitadoRenovacionesSlice';

@@ -39,6 +39,8 @@ export const rupesConductorDiscapacitadoSlice = createSlice({
     },
 
     onSetActiveRupeConductorDiscapacitado: (state, { payload }) => {
+      state.isLoadingRupesConductorDiscapacitado = false;
+      state.isLoadingRupesConductorDiscapacitadoModal = false;
       state.activeRupeConductorDiscapacitado = payload;
     },
 
@@ -57,6 +59,7 @@ export const rupesConductorDiscapacitadoSlice = createSlice({
     },
 
     onUpdateRupeConductorDiscapacitado: (state, { payload }) => {
+      state.activeRupeConductorDiscapacitado = payload;
       state.rupesConductorDiscapacitado = state.rupesConductorDiscapacitado.map( (rupeConductorDiscapacitado: any) => {
         if(rupeConductorDiscapacitado.id === payload.id) return payload;
         return rupeConductorDiscapacitado;

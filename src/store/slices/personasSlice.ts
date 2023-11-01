@@ -38,6 +38,8 @@ export const personasSlice = createSlice({
 
     onSetActivePersona: (state, { payload }) => {
       state.activePersona = payload;
+      state.isLoadingPersonas = false;
+      state.isLoadingPersonasModal = false;
     },
 
     onGetAllPersonas: (state, { payload }) => {
@@ -50,6 +52,7 @@ export const personasSlice = createSlice({
 
     onAddNewPersona: (state, { payload }) => {
       state.personas.unshift(payload);
+      state.activePersona = payload;
       state.isLoadingPersonas = false;
       state.isLoadingPersonasModal = false;
     },

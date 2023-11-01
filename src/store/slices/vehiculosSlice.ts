@@ -34,6 +34,8 @@ export const vehiculosSlice = createSlice({
     },
 
     onSetActiveVehiculo: (state, { payload }) => {
+      state.isLoadingVehiculos = false;
+      state.isLoadingVehiculosModal = false;
       state.activeVehiculo = payload;
     },
 
@@ -47,6 +49,7 @@ export const vehiculosSlice = createSlice({
 
     onAddNewVehiculo: (state, { payload }) => {
       state.vehiculos.unshift(payload);
+      state.activeVehiculo = payload;
       state.isLoadingVehiculos = false;
       state.isLoadingVehiculosModal = false;
     },

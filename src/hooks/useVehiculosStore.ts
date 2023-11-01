@@ -33,6 +33,28 @@ export const useVehiculosStore = () => {
     dispatch(onSetActiveVehiculo(vehiculo));
   }
 
+  const getVehiculoDominio = async (dominio: string) => {
+    
+    dispatch(onStartLoadingModalVehiculos());
+
+    try{
+      const { data } = await backendApi.get(`vehiculos/parametro/dominio/${dominio}`);
+      dispatch(onSetActiveVehiculo(data.vehiculo));
+    }catch(error){
+       // Vehiculo activa -> Vacio
+       dispatch(onSetActiveVehiculo({      
+        id: 0,
+        dominio: '',
+        marca: '',
+        modelo: '',
+        activo: true
+      }));
+      // Se abre el modal -> Nuevo vehiculo
+      dispatch(onToggleVehiculos());
+    }
+
+  }
+
   const getAllVehiculos = async () => {
 
     dispatch(onStartLoadingVehiculos());
@@ -112,6 +134,7 @@ export const useVehiculosStore = () => {
 
     // Methods
     getAllVehiculos,
+    getVehiculoDominio,
     addNewVehiculo,
     updateVehiculo,
     setActiveVehiculo,

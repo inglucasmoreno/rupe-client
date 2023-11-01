@@ -1,6 +1,5 @@
 import { useUsersStore } from "../../hooks/useUsersStore"
 import { useEffect } from 'react';
-import { ChangePasswordModal, UserModal } from "../../modals";
 import { UsersHeader, UsersTable } from ".";
 
 export const UsersPage = () => {
@@ -15,11 +14,6 @@ export const UsersPage = () => {
 
   return (
     <>
-
-      {/* Modales */}
-
-      <UserModal />
-      <ChangePasswordModal />
 
       {/* Principal comonent */}
 

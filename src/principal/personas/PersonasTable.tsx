@@ -1,10 +1,9 @@
 import { Button, Chip, ChipProps, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Pagination, SortDescriptor, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react"
 import { Key, useCallback, useMemo, useState } from "react";
 import { useUiStore, usePersonasStore } from "../../hooks";
-import { DislikeIcon, EditIcon, LikeIcon, MenuIcon } from "../../icons";
+import { EditIcon, MenuIcon } from "../../icons";
 import { format } from "date-fns";
 import { IPersonas } from "../../interfaces/Personas";
-import { ActiveItems } from "../../constants";
 
 export const PersonasTable = () => {
 
@@ -12,12 +11,11 @@ export const PersonasTable = () => {
     personas,
     isLoadingPersonas,
     setActivePersona,
-    activeInactivePersona
   } = usePersonasStore();
 
   const { togglePersonas } = useUiStore();
   const [filterValue, setFilterValue] = useState("");
-  const [filterActiveValue, setFilterActiveValue] = useState("true");
+  const [filterActiveValue] = useState("true");
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
     column: "descripcion",
     direction: "ascending",
@@ -30,31 +28,11 @@ export const PersonasTable = () => {
     togglePersonas();
   }
 
-  // Activate/Inactivate - Persona
-
-  const activateInactivatePersonaFnc = (persona: IPersonas) => {
-
-    let dataUpdate = {
-      id: persona.id,
-      activo: !persona.activo
-    }
-
-    activeInactivePersona(dataUpdate);
-
-  }
-
   // TODO: Modificar y hacerlo variable
 
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
   const pages = Math.ceil(personas.length / rowsPerPage);
-  
-  // Filter handler
-
-  const handleActiveSelectFilter = (event) => {
-    setFilterActiveValue(event.target.value);
-    setPage(1);
-  }
 
   const onSearchChange = useCallback((value?: string) => {
     if (value) {
@@ -74,7 +52,7 @@ export const PersonasTable = () => {
     }
 
     filteredElements = filteredElements.filter((element: IPersonas) =>
-      element.apellido.includes(filterValue.toUpperCase()) || 
+      element.apellido.includes(filterValue.toUpperCase()) ||
       element.nombre.includes(filterValue.toUpperCase()) ||
       element.dni.includes(filterValue.toUpperCase())
     );
@@ -115,6 +93,11 @@ export const PersonasTable = () => {
     },
 
     {
+      key: "icono",
+      label: "ICONO",
+    },
+
+    {
       key: "apellido",
       label: "APELLIDO",
     },
@@ -132,11 +115,6 @@ export const PersonasTable = () => {
     {
       key: "createdAt",
       label: "FECHA DE CREACION",
-    },
-
-    {
-      key: "activo",
-      label: "ESTADO",
     },
 
   ];
@@ -161,6 +139,14 @@ export const PersonasTable = () => {
           </Chip>
         );
 
+      case "icono": return (
+      
+      // <FaUserAlt className="text-2xl" />
+      
+      <img className="w-12" src="assets/beneficiario.svg" />
+
+      );
+
       case "createdAt": return (format(new Date(row.createdAt), 'dd/MM/yyyy'));
 
       case "actions":
@@ -184,16 +170,6 @@ export const PersonasTable = () => {
                   </span>
                 </div>
               </DropdownItem>
-              <DropdownItem onPress={() => activateInactivatePersonaFnc(row)} key="alta-baja-persona">
-                <div className="flex items-center">
-                  {
-                    row.activo ? <DislikeIcon className="w-4 h-4" /> : <LikeIcon className="w-4 h-4" />
-                  }
-                  <span className="ml-2">
-                    {row.activo ? 'Baja de persona' : 'Alta de persona'}
-                  </span>
-                </div>
-              </DropdownItem>
             </DropdownMenu>
           </Dropdown>
         );
@@ -214,19 +190,6 @@ export const PersonasTable = () => {
           className="w-52"
           onValueChange={onSearchChange}
         />
-
-        <select 
-          className="equi-select ml-2"
-          defaultValue={filterActiveValue}
-          onChange={handleActiveSelectFilter}
-          >
-          {
-            ActiveItems.map((item) => (
-                <option key={item.key} value={item.value}>{item.description}</option>
-            ))
-          }
-        </select>
-
       </div>
 
     )

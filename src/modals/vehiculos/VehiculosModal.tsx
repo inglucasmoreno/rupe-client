@@ -55,7 +55,6 @@ export const VehiculosModal = () => {
 
               <Input
                 type="text"
-                autoFocus
                 variant="bordered"
                 className="mt-4"
                 defaultValue={activeVehiculo.id === 0 ? '' : activeVehiculo.marca}
@@ -69,7 +68,6 @@ export const VehiculosModal = () => {
 
               <Input
                 type="text"
-                autoFocus
                 variant="bordered"
                 className="mt-4"
                 defaultValue={activeVehiculo.id === 0 ? '' : activeVehiculo.modelo}

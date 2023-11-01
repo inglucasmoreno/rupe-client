@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { IPersonas } from "../../interfaces/Personas";
 import { useEffect } from "react";
 import { usePersonasStore } from "../../hooks";
-import { SexoItems, DiscapacidadItems } from "../../constants";
+import { SexoItems } from "../../constants";
 
 export const PersonasModal = () => {
 
@@ -17,8 +17,6 @@ export const PersonasModal = () => {
   }, [isPersonasOpen])
 
   const onSubmit = handleSubmit((data) => {
-
-    console.log(data);
 
     if (activePersona.id !== 0) {
       updatePersona(data);
@@ -56,7 +54,6 @@ export const PersonasModal = () => {
 
               <Input
                 type="text"
-                autoFocus
                 variant="bordered"
                 className="mt-4"
                 defaultValue={activePersona.id === 0 ? '' : activePersona.nombre}
@@ -70,7 +67,6 @@ export const PersonasModal = () => {
 
               <Input
                 type="text"
-                autoFocus
                 variant="bordered"
                 className="mt-4"
                 defaultValue={activePersona.id === 0 ? '' : activePersona.dni}
@@ -84,7 +80,6 @@ export const PersonasModal = () => {
 
               <Input
                 type="text"
-                autoFocus
                 variant="bordered"
                 className="mt-4"
                 defaultValue={activePersona.id === 0 ? '' : activePersona.telefono}
@@ -103,20 +98,6 @@ export const PersonasModal = () => {
               >
                 {
                   SexoItems.map((item) => (
-                    <option key={item.key} value={item.value}> {item.description} </option>
-                  ))
-                }
-              </select>
-
-              <select
-                className='equi-select w-full mt-4'
-                defaultValue={activePersona.id === 0 ? '' : String(activePersona.discapacidad)}
-                {...register('discapacidad', {
-                  required: { value: true, message: 'El campo es obligatorio' }
-                })}
-              >
-                {
-                  DiscapacidadItems.map((item) => (
                     <option key={item.key} value={item.value}> {item.description} </option>
                   ))
                 }

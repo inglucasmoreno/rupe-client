@@ -5,6 +5,5 @@ export interface IPersonas {
   dni:           string,
   telefono:      string,
   sexo:          string,
-  discapacidad:  boolean,
   activo:        boolean
 }

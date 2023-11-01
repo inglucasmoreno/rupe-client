@@ -3,7 +3,6 @@ export interface IRupesDiscapacidad {
   beneficiario:         number,
   vehiculo:             number,
   telefonoContacto:     string,
-  observaciones:        string,
   fechaOtorgamiento:    string,
   fechaVencimiento:     string,
   entregado:            string,

@@ -1,10 +1,9 @@
-import { Button, Chip, ChipProps, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Pagination, SortDescriptor, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react"
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Pagination, SortDescriptor, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react"
 import { Key, useCallback, useMemo, useState } from "react";
 import { useUiStore, useVehiculosStore } from "../../hooks";
-import { DislikeIcon, EditIcon, LikeIcon, MenuIcon } from "../../icons";
+import { EditIcon, MenuIcon } from "../../icons";
 import { format } from "date-fns";
 import { IVehiculos } from "../../interfaces/Vehiculos";
-import { ActiveItems } from "../../constants";
 
 export const VehiculosTable = () => {
 
@@ -12,12 +11,11 @@ export const VehiculosTable = () => {
     vehiculos,
     isLoadingVehiculos,
     setActiveVehiculo,
-    activeInactiveVehiculo
   } = useVehiculosStore();
 
   const { toggleVehiculos } = useUiStore();
   const [filterValue, setFilterValue] = useState("");
-  const [filterActiveValue, setFilterActiveValue] = useState("true");
+  const [filterActiveValue] = useState("true");
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
     column: "descripcion",
     direction: "ascending",
@@ -30,31 +28,11 @@ export const VehiculosTable = () => {
     toggleVehiculos();
   }
 
-  // Activate/Inactivate - Vehiculo
-
-  const activateInactivateVehiculoFnc = (vehiculo: IVehiculos) => {
-
-    let dataUpdate = {
-      id: vehiculo.id,
-      activo: !vehiculo.activo
-    }
-
-    activeInactiveVehiculo(dataUpdate);
-
-  }
-
   // TODO: Modificar y hacerlo variable
 
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
   const pages = Math.ceil(vehiculos.length / rowsPerPage);
-
-  // Filter handler
-
-  const handleActiveSelectFilter = (event) => {
-    setFilterActiveValue(event.target.value);
-    setPage(1);
-  }
 
   const onSearchChange = useCallback((value?: string) => {
     if (value) {
@@ -115,6 +93,11 @@ export const VehiculosTable = () => {
     },
 
     {
+      key: "icono",
+      label: "ICONO",
+    },
+
+    {
       key: "dominio",
       label: "DOMINIO",
     },
@@ -134,32 +117,20 @@ export const VehiculosTable = () => {
       label: "FECHA DE CREACION",
     },
 
-    {
-      key: "activo",
-      label: "ESTADO",
-    },
-
   ];
 
   // Table rows
-
-  const statusColorMap: Record<string, ChipProps["color"]> = {
-    activo: "success",
-    inactivo: "danger",
-  };
 
   const renderCell = useCallback((row: any, columnKey: Key) => {
 
     const cellValue = row[columnKey as keyof any];
 
     switch (columnKey) {
-
-      case "activo":
-        return (
-          <Chip className="capitalize" color={statusColorMap[row.activo ? 'activo' : 'inactivo']} size="sm" variant="flat">
-            {row.activo ? 'Activo' : 'Inactivo'}
-          </Chip>
-        );
+      
+      case "icono": return (
+        // <FaCarAlt className="text-2xl"/>
+        <img className="w-12" src="assets/vehiculo.svg" />
+      );
 
       case "createdAt": return (format(new Date(row.createdAt), 'dd/MM/yyyy'));
 
@@ -184,16 +155,6 @@ export const VehiculosTable = () => {
                   </span>
                 </div>
               </DropdownItem>
-              <DropdownItem onPress={() => activateInactivateVehiculoFnc(row)} key="alta-baja-vehiculo">
-                <div className="flex items-center">
-                  {
-                    row.activo ? <DislikeIcon className="w-4 h-4" /> : <LikeIcon className="w-4 h-4" />
-                  }
-                  <span className="ml-2">
-                    {row.activo ? 'Baja de vehiculo' : 'Alta de vehiculo'}
-                  </span>
-                </div>
-              </DropdownItem>
             </DropdownMenu>
           </Dropdown>
         );
@@ -214,17 +175,6 @@ export const VehiculosTable = () => {
           className="w-52"
           onValueChange={onSearchChange}
         />
-        <select
-          className="equi-select ml-2"
-          defaultValue={filterActiveValue}
-          onChange={handleActiveSelectFilter}
-        >
-          {
-            ActiveItems.map((item) => (
-              <option key={item.key} value={item.value}>{item.description}</option>
-            ))
-          }
-        </select>
       </div>
 
     )

@@ -12,7 +12,9 @@ import {
   onToggleRupesDiscapacidad,
   onToggleRupesConductorDiscapacitado,
   onToggleRupesConductor,
-  onToggleVehiculos
+  onToggleVehiculos,
+  onToggleRupesDiscapacidadRenovaciones,
+  onToggleRupesConductorDiscapacitadoRenovaciones
 } from "../store/slices";
 
 export const useUiStore = () => {
@@ -24,7 +26,9 @@ export const useUiStore = () => {
     isUserOpen,
     isPersonasOpen,
     isRupesDiscapacidadOpen,
+    isRupesDiscapacidadRenovacionesOpen,
     isRupesConductorDiscapacitadoOpen,
+    isRupesConductorDiscapacitadoRenovacionesOpen,
     isRupesConductorOpen,
     isVehiculosOpen,
     isProfileOpen,
@@ -81,9 +85,19 @@ export const useUiStore = () => {
     dispatch(onToggleRupesDiscapacidad());
   }
 
+  // RUPE discapacidad renovaciones - Modal
+  const toggleRupesDiscapacidadRenovaciones = () => {
+    dispatch(onToggleRupesDiscapacidadRenovaciones());
+  }
+
   // RUPE conductor discapacitado - Modal
   const toggleRupesConductorDiscapacitado = () => {
     dispatch(onToggleRupesConductorDiscapacitado());
+  }
+
+  // RUPE conductor discapacitado renovaciones - Modal
+  const toggleRupesConductorDiscapacitadoRenovaciones = () => {
+    dispatch(onToggleRupesConductorDiscapacitadoRenovaciones());
   }
 
   // RUPE conductor - Modal
@@ -123,7 +137,9 @@ export const useUiStore = () => {
     isUserOpen,
     isPersonasOpen,
     isRupesDiscapacidadOpen,
+    isRupesDiscapacidadRenovacionesOpen,
     isRupesConductorDiscapacitadoOpen,
+    isRupesConductorDiscapacitadoRenovacionesOpen,
     isRupesConductorOpen,
     isVehiculosOpen,
     isProfileOpen,
@@ -138,7 +154,9 @@ export const useUiStore = () => {
     toggleProfile,
     togglePersonas,
     toggleRupesDiscapacidad,
+    toggleRupesDiscapacidadRenovaciones,
     toggleRupesConductorDiscapacitado,
+    toggleRupesConductorDiscapacitadoRenovaciones,
     toggleRupesConductor,
     toggleVehiculos,
     toggleChangePassword,

@@ -14,6 +14,7 @@ import {
   Avatar,
   DropdownMenu,
   DropdownItem,
+  Switch,
 } from "@nextui-org/react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ConfirmModal, ProfileModal } from '../../../modals';
@@ -47,7 +48,7 @@ export const Navbar = () => {
           />
           <NavbarBrand>
             <Link onPress={() => navigate('/')} className="font-bold text-inherit cursor-pointer" color="foreground">
-              EQUINOCCIO
+              OBLEA - DISCAPACIDAD
             </Link>
           </NavbarBrand>
         </NavbarContent>
@@ -76,23 +77,57 @@ export const Navbar = () => {
 
             <Dropdown className="ml-2">
               <DropdownTrigger className='cursor-pointer'>
-                <Link color="foreground"> Configuraciones </Link>
+                <Link color="foreground"> RUPES </Link>
               </DropdownTrigger>
               <DropdownMenu>
-
-                {
-                  user.role === 'ADMIN_ROLE' &&
-                  <DropdownItem onPress={() => navigate('/usuarios')} key="usuarios"> Usuarios </DropdownItem>
-                }
-
+                <DropdownItem onPress={() => navigate('/rupes-discapacidad')} key="rupes-discapacidad"> Discapacidad </DropdownItem>
+                <DropdownItem onPress={() => navigate('/rupes-conductor-discapacitado')} key="rupes-conductor-discapacitado"> Conductor discapacitado </DropdownItem>
               </DropdownMenu>
             </Dropdown>
+
+          </NavbarItem>
+
+          <NavbarItem>
+
+            {
+              user.role === 'ADMIN_ROLE' &&
+              <Dropdown className="ml-2">
+                <DropdownTrigger className='cursor-pointer'>
+                  <Link color="foreground"> Configuraciones </Link>
+                </DropdownTrigger>
+                <DropdownMenu>
+
+                  {
+                    user.role === 'ADMIN_ROLE' &&
+                    <DropdownItem onPress={() => navigate('/usuarios')} key="usuarios"> Usuarios </DropdownItem>
+                  }
+
+                </DropdownMenu>
+              </Dropdown>
+
+            }
 
           </NavbarItem>
 
         </NavbarContent>
 
         <NavbarContent justify="end">
+
+          <Switch
+            defaultSelected={!isDarkMode}
+            onChange={() => toggleDarkMode()}
+            size="md"
+            color="secondary"
+            thumbIcon={({ isSelected, className }) =>
+              !isDarkMode ? (
+                <SunIcon className={className + `${isSelected} ? text-orange-500` } />
+              ) : (
+                <MoonIcon className={className + `${isSelected} ? text-zinc-800` } />
+              )
+            }
+          >
+          </Switch>
+
           <NavbarItem>
             <Dropdown placement="bottom-end">
               <DropdownTrigger>
@@ -119,7 +154,7 @@ export const Navbar = () => {
                   </div>
 
                 </DropdownItem>
-
+                {/* 
                 <DropdownItem
                   onPress={() => toggleDarkMode()}
                   key="dark_mode"
@@ -138,7 +173,7 @@ export const Navbar = () => {
                       }
                     </span>
                   </div>
-                </DropdownItem>
+                </DropdownItem> */}
 
                 <DropdownItem className="text-danger-500" onClick={() => logout()} key="logout" color="danger">
                   Cerrar sesion
@@ -148,19 +183,6 @@ export const Navbar = () => {
           </NavbarItem>
         </NavbarContent>
         <NavbarMenu>
-          {/* 
-          {menuItems.map((item, index) => (
-            <NavbarMenuItem className="w-full cursor-pointer" key={`${item.link}-${index}`}>
-              <Link
-                color="foreground"
-                size="lg"
-                className={location.pathname === item.url ? 'text-secondary w-full' : 'w-full'}
-                onPress={() => navigateTo(item.url)}
-              >
-                {item.link}
-              </Link>
-            </NavbarMenuItem>
-          ))} */}
 
           <NavbarMenuItem className='cursor-pointer'>
             <Link
@@ -210,6 +232,30 @@ export const Navbar = () => {
               className={location.pathname === '/vehiculos' ? 'text-secondary w-full' : 'w-full'}
             >
               Vehiculos
+            </Link>
+          </NavbarMenuItem>
+
+          <NavbarMenuItem className='cursor-pointer'>
+            <Link
+              onPress={() => navigateTo('/rupes-discapacidad')}
+              key="vehiculos"
+              size='lg'
+              color='foreground'
+              className={location.pathname === '/rupes-discapacidad' ? 'text-secondary w-full' : 'w-full'}
+            >
+              Rupe - Discapacidad
+            </Link>
+          </NavbarMenuItem>
+
+          <NavbarMenuItem className='cursor-pointer'>
+            <Link
+              onPress={() => navigateTo('/rupes-conductor-discapacitado')}
+              key="vehiculos"
+              size='lg'
+              color='foreground'
+              className={location.pathname === '/rupes-conductor-discapacitado' ? 'text-secondary w-full' : 'w-full'}
+            >
+              Rupe - Cond. Discapacitado
             </Link>
           </NavbarMenuItem>
 

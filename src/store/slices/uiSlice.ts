@@ -7,7 +7,9 @@ export const uiSlice = createSlice({
     isUserOpen: false,
     isPersonasOpen: false,
     isRupesDiscapacidadOpen: false,
+    isRupesDiscapacidadRenovacionesOpen: false,
     isRupesConductorDiscapacitadoOpen: false,
+    isRupesConductorDiscapacitadoRenovacionesOpen: false,
     isRupesConductorOpen: false,
     isVehiculosOpen: false,
     isChangePasswordOpen: false,
@@ -55,11 +57,24 @@ export const uiSlice = createSlice({
       state.isRupesDiscapacidadOpen = !state.isRupesDiscapacidadOpen;
     },
 
+    // RUPES - Discapacidad Renovaciones
+
+    onToggleRupesDiscapacidadRenovaciones: (state) => {
+      state.isRupesDiscapacidadRenovacionesOpen = !state.isRupesDiscapacidadRenovacionesOpen;
+    },
+
     // RUPES - Conductor Discapacitado
 
     onToggleRupesConductorDiscapacitado: (state) => {
       state.isRupesConductorDiscapacitadoOpen = !state.isRupesConductorDiscapacitadoOpen;
     },
+
+    // RUPES - Conductor Discapacitado Renovaciones
+
+    onToggleRupesConductorDiscapacitadoRenovaciones: (state) => {
+      state.isRupesConductorDiscapacitadoRenovacionesOpen = !state.isRupesConductorDiscapacitadoRenovacionesOpen;
+    },
+
 
     // RUPES - Conductor
 
@@ -94,7 +109,9 @@ export const {
   onToggleNewUser,
   onTogglePersonas,
   onToggleRupesDiscapacidad,
+  onToggleRupesDiscapacidadRenovaciones,
   onToggleRupesConductorDiscapacitado,
+  onToggleRupesConductorDiscapacitadoRenovaciones,
   onToggleRupesConductor,
   onToggleVehiculos,
   onToggleProfile,
