@@ -7,6 +7,10 @@ export const VehiculosPage = () => {
   const { getAllVehiculos } = useVehiculosStore();
 
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
     getAllVehiculos();
   }, [])
 

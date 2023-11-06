@@ -10,11 +10,11 @@ export default {
   ],
   theme: {
     extend: {
-      // colors: {
-      //   'primary': '#4a5084',
-        'secondary': '#9455D3',
-      //   'background': '#ECECEC'
-      // }
+      colors: {
+        'primary': '#E03584',
+        'secondary': '#005780',
+        // 'background': '#ECECEC'
+      }
     },
   },
   darkMode: "class",

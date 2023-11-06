@@ -18,6 +18,10 @@ export const RupesConductorDiscapacitadoDetallesPage = () => {
   const { id } = useParams();
 
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
     if (id) getIdRupeConductorDiscapacitado(id)
   }, [])
 

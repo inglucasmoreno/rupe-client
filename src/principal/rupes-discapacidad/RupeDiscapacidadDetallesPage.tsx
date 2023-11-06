@@ -18,6 +18,10 @@ export const RupeDiscapacidadDetallesPage = () => {
   const { id } = useParams();
 
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
     if (id) getIdRupeDiscapacidad(id)
   }, [])
 

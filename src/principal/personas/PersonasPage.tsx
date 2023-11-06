@@ -7,6 +7,10 @@ export const PersonasPage = () => {
   const { getAllPersonas } = usePersonasStore();
 
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
     getAllPersonas();
   }, [])
 

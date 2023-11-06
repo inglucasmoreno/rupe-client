@@ -39,7 +39,7 @@ export const Navbar = () => {
       <ConfirmModal />
       <ProfileModal />
       <NavbarNextUI
-        className='border-b dark:border-zinc-600 dark:bg-zinc-900 bg-zinc-50'
+        className='border-b dark:border-zinc-600 bg-opacity-75 dark:bg-zinc-900 bg-zinc-50'
         isMenuOpen={isMenuOpen}
         onMenuOpenChange={(event) => setIsMenuOpen(event)}>
         <NavbarContent>
@@ -48,7 +48,9 @@ export const Navbar = () => {
           />
           <NavbarBrand>
             <Link onPress={() => navigate('/')} className="font-bold text-inherit cursor-pointer" color="foreground">
-              OBLEA - DISCAPACIDAD
+              <div className="flex items-center">
+                <img src="/assets/logo.png" className="w-20" alt="" />
+              </div>
             </Link>
           </NavbarBrand>
         </NavbarContent>
@@ -56,19 +58,19 @@ export const Navbar = () => {
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
 
           <NavbarItem className='cursor-pointer'>
-            <Link onPress={() => navigate('/')} className={location.pathname === '/' && 'text-secondary'} color="foreground">
+            <Link onPress={() => navigate('/')} className={location.pathname === '/' && 'bg-primary p-2 rounded text-white'} color="foreground">
               Inicio
             </Link>
           </NavbarItem>
 
           <NavbarItem className='cursor-pointer'>
-            <Link onPress={() => navigate('/personas')} className={location.pathname === '/personas' && 'text-secondary'} color="foreground">
+            <Link onPress={() => navigate('/personas')} className={location.pathname === '/personas' && 'bg-primary p-2 rounded text-white'} color="foreground">
               Personas
             </Link>
           </NavbarItem>
 
           <NavbarItem className='cursor-pointer'>
-            <Link onPress={() => navigate('/vehiculos')} className={location.pathname === '/vehiculos' && 'text-secondary'} color="foreground">
+            <Link onPress={() => navigate('/vehiculos')} className={location.pathname === '/vehiculos' && 'bg-primary p-2 rounded text-white'} color="foreground">
               Vehiculos
             </Link>
           </NavbarItem>
@@ -76,7 +78,10 @@ export const Navbar = () => {
           <NavbarItem>
 
             <Dropdown className="ml-2">
-              <DropdownTrigger className='cursor-pointer'>
+              <DropdownTrigger className={
+                location.pathname === '/rupes-discapacidad' || location.pathname === '/rupes-conductor-discapacitado'
+                  ? 'bg-primary p-2 rounded text-white cursor-pointer'
+                  : 'cursor-pointer'}>
                 <Link color="foreground"> RUPES </Link>
               </DropdownTrigger>
               <DropdownMenu>
@@ -92,7 +97,10 @@ export const Navbar = () => {
             {
               user.role === 'ADMIN_ROLE' &&
               <Dropdown className="ml-2">
-                <DropdownTrigger className='cursor-pointer'>
+                <DropdownTrigger className={
+                  location.pathname === '/usuarios'
+                    ? 'bg-primary p-2 rounded text-white cursor-pointer'
+                    : 'cursor-pointer'}>
                   <Link color="foreground"> Configuraciones </Link>
                 </DropdownTrigger>
                 <DropdownMenu>
@@ -120,9 +128,9 @@ export const Navbar = () => {
             color="secondary"
             thumbIcon={({ isSelected, className }) =>
               !isDarkMode ? (
-                <SunIcon className={className + `${isSelected} ? text-orange-500` } />
+                <SunIcon className={className + `${isSelected} ? text-orange-500`} />
               ) : (
-                <MoonIcon className={className + `${isSelected} ? text-zinc-800` } />
+                <MoonIcon className={className + `${isSelected} ? text-zinc-800`} />
               )
             }
           >
@@ -190,7 +198,7 @@ export const Navbar = () => {
               key="inicio"
               size='lg'
               color='foreground'
-              className={location.pathname === '/' ? 'text-secondary w-full' : 'w-full'}
+              className={location.pathname === '/' ? 'bg-primary p-2 text-white rounded w-full' : 'w-full'}
             >
               Inicio
             </Link>
@@ -204,7 +212,7 @@ export const Navbar = () => {
                 key="usuarios"
                 size='lg'
                 color='foreground'
-                className={location.pathname === '/usuarios' ? 'text-secondary w-full' : 'w-full'}
+                className={location.pathname === '/usuarios' ? 'bg-primary p-2 text-white rounded w-full' : 'w-full'}
               >
                 Usuarios
               </Link>
@@ -217,7 +225,7 @@ export const Navbar = () => {
               key="personas"
               size='lg'
               color='foreground'
-              className={location.pathname === '/personas' ? 'text-secondary w-full' : 'w-full'}
+              className={location.pathname === '/personas' ? 'bg-primary p-2 text-white rounded w-full' : 'w-full'}
             >
               Personas
             </Link>
@@ -229,7 +237,7 @@ export const Navbar = () => {
               key="vehiculos"
               size='lg'
               color='foreground'
-              className={location.pathname === '/vehiculos' ? 'text-secondary w-full' : 'w-full'}
+              className={location.pathname === '/vehiculos' ? 'bg-primary p-2 text-white rounded w-full' : 'w-full'}
             >
               Vehiculos
             </Link>
@@ -241,7 +249,7 @@ export const Navbar = () => {
               key="vehiculos"
               size='lg'
               color='foreground'
-              className={location.pathname === '/rupes-discapacidad' ? 'text-secondary w-full' : 'w-full'}
+              className={location.pathname === '/rupes-discapacidad' ? 'bg-primary p-2 text-white rounded w-full' : 'w-full'}
             >
               Rupe - Discapacidad
             </Link>
@@ -253,7 +261,7 @@ export const Navbar = () => {
               key="vehiculos"
               size='lg'
               color='foreground'
-              className={location.pathname === '/rupes-conductor-discapacitado' ? 'text-secondary w-full' : 'w-full'}
+              className={location.pathname === '/rupes-conductor-discapacitado' ? 'bg-primary p-2 text-white rounded w-full' : 'w-full'}
             >
               Rupe - Cond. Discapacitado
             </Link>

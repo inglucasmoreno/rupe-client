@@ -5,6 +5,10 @@ import { RupesDiscapacidadHeader, RupesDiscapacidadTable } from "./components";
 export const RupesDiscapacidadPage = () => {
 
   const { getAllRupesDiscapacidad } = useRupesDiscapacidadStore();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   useEffect(() => {
     getAllRupesDiscapacidad();

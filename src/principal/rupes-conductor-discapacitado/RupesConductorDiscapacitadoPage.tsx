@@ -7,6 +7,10 @@ export const RupesConductorDiscapacitadoPage = () => {
   const { getAllRupesConductorDiscapacitado } = useRupesConductorDiscapacitadoStore();
 
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
     getAllRupesConductorDiscapacitado();
   }, [])
 
