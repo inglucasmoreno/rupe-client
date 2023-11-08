@@ -30,14 +30,12 @@ export const LoginPage = () => {
 
   
   const onSubmit = handleSubmit((data: any) => {
-    console.log(data);
     login(data);
     reset();
   })
 
   return (
     <div>
-
 
       <div className="flex">
 
@@ -50,7 +48,7 @@ export const LoginPage = () => {
             <div className="text-center">
               <img src="/assets/logo.png" className="w-24 md:w-36 mx-auto" alt="Equinoccio-Designe" />
               <h1 className="text-2xl md:text-3xl font-semibold mt-5 text-secondary"> INGRESO AL SISTEMA </h1>
-              <h2 className="font-semibold"> Generado de obleas - Discapacidad </h2>
+              <h2 className="font-semibold"> Generador de obleas - Discapacidad </h2>
               <p className="font-semibold mt-2 text-primary"> Version 1.1.0 </p>
             </div>
             <div className="mt-10">

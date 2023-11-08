@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useRupesConductorDiscapacitadoStore, useUiStore } from "../../hooks"
 import { useNavigate, useParams } from "react-router-dom";
-import { FaArrowLeft, FaCalendarCheck, FaCalendarXmark } from "react-icons/fa6";
+import { FaArrowLeft, FaCalendarCheck, FaCalendarXmark, FaPrint } from "react-icons/fa6";
 import { Card, CardBody, Tab, Tabs, CardHeader, Dropdown, DropdownTrigger, Button, DropdownMenu, DropdownItem } from '@nextui-org/react';
 import { format } from "date-fns";
 import { EditIcon, MenuIcon } from "../../icons";
@@ -13,7 +13,12 @@ export const RupesConductorDiscapacitadoDetallesPage = () => {
 
   // Obtener id del rupe desde la direccion como parametro
 
-  const { getIdRupeConductorDiscapacitado, activeRupeConductorDiscapacitado, isLoadingRupesConductorDiscapacitado }: any = useRupesConductorDiscapacitadoStore();
+  const {
+    getIdRupeConductorDiscapacitado,
+    activeRupeConductorDiscapacitado,
+    isLoadingRupesConductorDiscapacitado,
+    imprimirOblea,
+  }: any = useRupesConductorDiscapacitadoStore();
   const { toggleRupesConductorDiscapacitado } = useUiStore();
   const { id } = useParams();
 
@@ -34,8 +39,8 @@ export const RupesConductorDiscapacitadoDetallesPage = () => {
 
       {
 
-          isLoadingRupesConductorDiscapacitado ?
-          
+        isLoadingRupesConductorDiscapacitado ?
+
           <div className="flex items-center justify-center mt-4 mb-4">
             <span className="text-lg text-gray-400">
               Cargando RUPE...
@@ -80,6 +85,14 @@ export const RupesConductorDiscapacitadoDetallesPage = () => {
                                 </span>
                               </div>
                             </DropdownItem>
+                            <DropdownItem onClick={() => imprimirOblea(id)}>
+                              <div className="flex items-center">
+                                <FaPrint className="h-4 w-4" />
+                                <span className="ml-2">
+                                  Imprimir oblea
+                                </span>
+                              </div>
+                            </DropdownItem>
                           </DropdownMenu>
                         </Dropdown>
                       </CardHeader>
@@ -119,7 +132,7 @@ export const RupesConductorDiscapacitadoDetallesPage = () => {
                             <div className="ml-4">
                               <p className="font-semibold text-md"> {activeRupeConductorDiscapacitado?.beneficiario.apellido} {activeRupeConductorDiscapacitado?.beneficiario.nombre} </p>
                               <div className="text-gray-500 text-base dark:text-zinc-400">
-                                <p> DNI {activeRupeConductorDiscapacitado?.beneficiario.dni} </p>    
+                                <p> DNI {activeRupeConductorDiscapacitado?.beneficiario.dni} </p>
                                 {
                                   activeRupeConductorDiscapacitado?.beneficiario.telefono &&
                                   <p> Tel. {activeRupeConductorDiscapacitado?.beneficiario.telefono} </p>

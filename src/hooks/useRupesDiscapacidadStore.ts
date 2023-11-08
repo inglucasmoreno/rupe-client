@@ -35,6 +35,22 @@ export const useRupesDiscapacidadStore = () => {
     dispatch(onSetActiveRupeDiscapacidad(rupeDiscapacidad));
   }
 
+  const imprimirOblea = async (id) => {
+
+    try{
+      const { data } = await backendApi.get(`rupe-discapacidad/imprimir-oblea/${id}`, {
+        responseType: 'blob'
+      });
+      const file = new Blob([data], { type: 'application/pdf' });
+      const fileURL = URL.createObjectURL(file);
+      window.open(fileURL);
+    }catch(error){
+      const errorMessage = error.response.data.message;
+      notistack.error(errorMessage);
+    }
+
+  }
+
   const getIdRupeDiscapacidad = async (id) => {
     
     dispatch(onStartLoadingRupesDiscapacidad());
@@ -131,6 +147,7 @@ export const useRupesDiscapacidadStore = () => {
     // Methods
     getIdRupeDiscapacidad,
     getAllRupesDiscapacidad,
+    imprimirOblea,
     addNewRupeDiscapacidad,
     updateRupeDiscapacidad,
     setActiveRupeDiscapacidad,

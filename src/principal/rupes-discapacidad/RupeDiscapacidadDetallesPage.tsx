@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useRupesDiscapacidadStore, useUiStore } from "../../hooks"
 import { useNavigate, useParams } from "react-router-dom";
-import { FaArrowLeft, FaCalendarCheck, FaCalendarXmark } from "react-icons/fa6";
+import { FaArrowLeft, FaCalendarCheck, FaCalendarXmark, FaPrint } from "react-icons/fa6";
 import { Card, CardBody, Tab, Tabs, CardHeader, Dropdown, DropdownTrigger, Button, DropdownMenu, DropdownItem } from '@nextui-org/react';
 import { format } from "date-fns";
 import { EditIcon, MenuIcon } from "../../icons";
@@ -13,7 +13,11 @@ export const RupeDiscapacidadDetallesPage = () => {
 
   // Obtener id del rupe desde la direccion como parametro
 
-  const { getIdRupeDiscapacidad, activeRupeDiscapacidad, isLoadingRupesDiscapacidad }: any = useRupesDiscapacidadStore();
+  const { getIdRupeDiscapacidad, 
+          activeRupeDiscapacidad, 
+          isLoadingRupesDiscapacidad,
+          imprimirOblea,
+  }: any = useRupesDiscapacidadStore();
   const { toggleRupesDiscapacidad } = useUiStore();
   const { id } = useParams();
 
@@ -73,6 +77,14 @@ export const RupeDiscapacidadDetallesPage = () => {
                                 <EditIcon className="h-4 w-4" />
                                 <span className="ml-2">
                                   Editar RUPE
+                                </span>
+                              </div>
+                            </DropdownItem>
+                            <DropdownItem onClick={() => imprimirOblea(id)}>
+                              <div className="flex items-center">
+                                <FaPrint className="h-4 w-4" />
+                                <span className="ml-2">
+                                  Imprimir oblea
                                 </span>
                               </div>
                             </DropdownItem>

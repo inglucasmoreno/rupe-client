@@ -4,7 +4,7 @@ import { useUiStore, useRupesDiscapacidadStore } from "../../../hooks";
 import { EditIcon, MenuIcon } from "../../../icons";
 import { format } from "date-fns";
 import { IRupesDiscapacidad } from "../../../interfaces/RupesDiscapacidad";
-import { FaIdCardClip, FaReceipt } from "react-icons/fa6";
+import { FaPrint, FaReceipt } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 
 export const RupesDiscapacidadTable = () => {
@@ -13,6 +13,7 @@ export const RupesDiscapacidadTable = () => {
     rupesDiscapacidad,
     isLoadingRupesDiscapacidad,
     setActiveRupeDiscapacidad,
+    imprimirOblea,
   } = useRupesDiscapacidadStore();
 
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ export const RupesDiscapacidadTable = () => {
 
     filteredElements = filteredElements.filter((element: any) =>
       element.id.toString() === filterValue.toUpperCase() ||
+      element.beneficiario.dni.toString().includes(filterValue.toUpperCase()) ||
       (`${element.beneficiario.apellido} ${element.beneficiario.nombre}`).includes(filterValue.toUpperCase()) ||
       element.vehiculo.dominio.includes(filterValue.toUpperCase()) ||
       element.vehiculo.marca.includes(filterValue.toUpperCase()) ||
@@ -68,13 +70,32 @@ export const RupesDiscapacidadTable = () => {
 
   // Sort handler
 
+  // Sort handler
+
   const sortedItems = useMemo(() => {
-    return [...filteredItems].sort((a: IRupesDiscapacidad, b: IRupesDiscapacidad) => {
-      const first = a[sortDescriptor.column as keyof IRupesDiscapacidad] as number;
-      const second = b[sortDescriptor.column as keyof IRupesDiscapacidad] as number;
-      const cmp = first < second ? -1 : first > second ? 1 : 0;
+
+    return [...filteredItems].sort((a: any, b: any) => {
+
+      let first = null;
+      let second = null;
+      let cmp = null;
+
+      if (sortDescriptor.column === 'beneficiario') {
+        first = a.beneficiario.apellido as number;
+        second = b.beneficiario.apellido as number;
+        cmp = first < second ? -1 : first > second ? 1 : 0;
+      } else if (sortDescriptor.column === 'vehiculo') {
+        first = a.vehiculo.marca as number;
+        second = b.vehiculo.marca as number;
+        cmp = first < second ? -1 : first > second ? 1 : 0;
+      } else {
+        first = a[sortDescriptor.column as keyof any] as number;
+        second = b[sortDescriptor.column as keyof any] as number;
+        cmp = first < second ? -1 : first > second ? 1 : 0;
+      }
 
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
+
     });
   }, [sortDescriptor, filteredItems]);
 
@@ -206,13 +227,13 @@ export const RupesDiscapacidadTable = () => {
                   </span>
                 </div>
               </DropdownItem>
-              <DropdownItem onPress={() => openUpdateRupeDiscapacidadModal(row)} key="imprimir-rupe-discapacidad">
+              <DropdownItem onPress={() => imprimirOblea(row.id)} key="imprimir-oblea">
                 <div className="flex items-center">
                   <div>
-                    <FaIdCardClip />
+                    <FaPrint />
                   </div>
                   <span className="ml-2">
-                    Generar oblea
+                    Imprimir oblea
                   </span>
                 </div>
               </DropdownItem>
